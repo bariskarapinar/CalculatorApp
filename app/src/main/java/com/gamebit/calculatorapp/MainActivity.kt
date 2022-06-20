@@ -83,21 +83,20 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
 
-        buttonNeg.setOnClickListener({view ->
+        buttonNeg.setOnClickListener {
             val value = newNumber.text.toString()
-            if (value.isEmpty()){
+            if (value.isEmpty()) {
                 newNumber.setText("-")
             } else {
                 try {
                     var doubleValue = value.toDouble()
                     newNumber.setText(doubleValue.toString())
-                }catch (e: java.lang.NumberFormatException){
+                } catch (e: java.lang.NumberFormatException) {
                     // newNumber was "-" or ".", so clear it
                     newNumber.setText("")
                 }
             }
-        })
-
+        }
     }
 
     private fun performOperation(value: Double, operation: String) {
