@@ -1,6 +1,8 @@
 package com.gamebit.calculatorapp
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
 class CalculatorViewModel : ViewModel() {
@@ -8,9 +10,17 @@ class CalculatorViewModel : ViewModel() {
     private var operand1: Double? = null
     private var pendingOperation = "="
 
-    val result = MutableLiveData<String>()
-    val newNumber = MutableLiveData<String>()
-    val operation = MutableLiveData<String>()
+    private val result = MutableLiveData<Double>()
+    val stringResult: LiveData<String>
+        get() = Transformations.map(result) { it.toString() }
+
+    private val newNumber = MutableLiveData<String>()
+    val stringNewNumber: LiveData<String>
+        get() = newNumber
+
+    private val operation = MutableLiveData<String>()
+    val stringOperation: LiveData<String>
+        get() = operation
 
     fun digitPressed(caption: String) {
         if (newNumber.value != null) {
@@ -69,7 +79,7 @@ class CalculatorViewModel : ViewModel() {
                 "+" -> operand1 = operand1!! + value
             }
         }
-        result.value = operand1.toString()
+        result.value = operand1
         newNumber.value = ""
     }
 }
